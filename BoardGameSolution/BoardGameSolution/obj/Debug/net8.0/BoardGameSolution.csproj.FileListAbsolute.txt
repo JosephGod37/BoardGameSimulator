@@ -12,3 +12,4 @@
 /home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.pdb
 /home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.genruntimeconfig.cache
 /home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/ref/BoardGameSolution.dll
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.sourcelink.json
