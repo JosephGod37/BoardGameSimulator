@@ -1,0 +1,14 @@
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/bin/Debug/net8.0/BoardGameSolution
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/bin/Debug/net8.0/BoardGameSolution.deps.json
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/bin/Debug/net8.0/BoardGameSolution.runtimeconfig.json
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/bin/Debug/net8.0/BoardGameSolution.dll
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/bin/Debug/net8.0/BoardGameSolution.pdb
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.GeneratedMSBuildEditorConfig.editorconfig
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.AssemblyInfoInputs.cache
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.AssemblyInfo.cs
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.csproj.CoreCompileInputs.cache
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.dll
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/refint/BoardGameSolution.dll
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.pdb
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/BoardGameSolution.genruntimeconfig.cache
+/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/Debug/net8.0/ref/BoardGameSolution.dll
