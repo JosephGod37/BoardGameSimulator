@@ -96,23 +96,124 @@ public class Board
     }
 }
 
+public class Game
+{
+     private Board board;
+    private List<Player> players;
+    private int currentPlayerIndex;
+
+    public void StartGame()
+    {
+        
+        Console.WriteLine("Czy chcesz powiększyć mapę? (standardowy rozmiar to 30) t/n");
+        string choice = Console.ReadLine();
+
+        if (choice == "n")
+        {
+            board = new Board(); 
+            Console.WriteLine($"Rozmiar mapy to: {board.boardSize}");
+        }
+        else
+        {
+            Console.WriteLine("Podaj rozmiar mapy (musi być większa niż 30)");
+            string choice2 = Console.ReadLine();
+
+            int number;
+
+            if (int.TryParse(choice2, out number) && number > 30)
+            {
+                board = new Board(number);
+                Console.WriteLine($"Rozmiar mapy to: {board.boardSize}");
+            }
+            else
+            {
+                Console.WriteLine("Błędny rozmiar mapy! Ustawiono domyślny rozmiar 30.");
+                board = new Board();  
+                Console.WriteLine($"Rozmiar mapy to: {board.boardSize}");
+            }
+        }
+
+     
+        Console.WriteLine("Podaj liczbę graczy (maksymalnie 2):");
+        int playerCount;
+
+        while (!int.TryParse(Console.ReadLine(), out playerCount) || playerCount < 1 || playerCount > 2)
+        {
+            Console.WriteLine("Niepoprawna liczba graczy. Proszę podać liczbę graczy (1 lub 2):");
+        }
+
+        players = new List<Player>();
+
+        
+        for (int i = 0; i < playerCount; i++)
+        {
+            Console.WriteLine($"Podaj imię gracza {i + 1}:");
+            string playerName = Console.ReadLine();
+            players.Add(new Player(playerName, 0, 0));  
+        }
+
+        Console.WriteLine($"Rozpoczynasz grę z {playerCount} graczami.");
+
+        currentPlayerIndex = 0;  
+
+        
+        while (true)
+        {
+            Player currentPlayer = players[currentPlayerIndex];
+
+           
+            Console.WriteLine($"\nGracz: {currentPlayer.Name}, Pozycja: {currentPlayer.Position}, Wynik: {currentPlayer.Score}");
+
+           
+            Console.WriteLine($"{currentPlayer.Name}, czy chcesz się ruszyć? (t/n)");
+            string moveChoice = Console.ReadLine();
+
+            if (moveChoice.ToLower() == "t")
+            {
+                
+                currentPlayer.Move();
+                
+                currentPlayer.CheckReward(board);
+
+                
+                if (currentPlayer.Position >= board.boardSize)
+                {
+                    EndGame();
+                    return;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{currentPlayer.Name} postanowił pominąć turę.");
+            }
+
+            
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+        }
+    }
+
+    private void EndGame()
+    {
+        Console.WriteLine("\nKoniec gry!");
+        foreach (var player in players)
+        {
+            Console.WriteLine($"Gracz {player.Name}: {player.Score} punktów.");
+        }
+
+        
+        if (players.Count == 2)
+        {
+            Player winner = players[0].Score > players[1].Score ? players[0] : players[1];
+            Console.WriteLine($"Zwycięzca: {winner.Name}!");
+        }
+    }
+}
 internal class Program
 {
     public static void Main(string[] args)
     {
-        var board = new Board();
-        var player = new Player("Alice", 0, 0);
-
-        Console.WriteLine($"Initial rewards: {string.Join(", ", board.generatingRewards)}");
-
-        
-        for (int i = 0; i < 10; i++) 
-        {
-            player.Move();
-            player.CheckReward(board); 
-        }
-
-        Console.WriteLine($"Final Score: {player.Score}");
+        Game game = new Game();
+        game.StartGame();
     }
     
 }
