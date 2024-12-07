@@ -30,7 +30,6 @@ public class Player
 
     public void updatePoints()
     {
-        Score += Position;
         Console.WriteLine("Score: {0}", Score);
     }
 
@@ -44,18 +43,30 @@ public class Player
             board.RemoveReward(Position);
         }
     }
+    public void CheckBomb(Board board)
+    {
+        if (board.HasBombAt(Position))
+        {
+            Score -= 2;
+            Console.WriteLine(
+                $"Gracz: {Name} znalazl bombe na pozycji: {Position}! dostaje minus 2 punkty, Score: {Score}");
+            board.RemoveBomb(Position);
+        }
+    }
 }
 
 public class Board
 {
     public int boardSize;
     public List<int> generatingRewards;
+    public List<int> generatingBomb;
     private Random rnd = new Random();
     public Board()
     {
         boardSize = 30;
         rnd = new Random();
         generatingRewards = GenerateRandomRewards(12, boardSize);
+        generatingBomb = GenerateBomb(12, boardSize);
     }
     public Board(int BoardSize)
     {
@@ -93,6 +104,29 @@ public class Board
     public void RemoveReward(int position)
     {
         generatingRewards.Remove(position); 
+    }
+    
+    private List<int> GenerateBomb(int bombCount, int maxPosition)
+    {
+        var bomb = new HashSet<int>(); 
+
+        while (bomb.Count < bombCount)
+        {
+            int randomPosition = rnd.Next(1, maxPosition + 1); 
+            bomb.Add(randomPosition);
+        }
+
+        return new List<int>(bomb); 
+    }
+    
+    public bool HasBombAt(int position)
+    {
+        return  generatingBomb.Contains(position); 
+    }
+    
+    public void RemoveBomb(int position)
+    {
+        generatingBomb.Remove(position); 
     }
 }
 
@@ -174,6 +208,8 @@ public class Game
                 currentPlayer.Move();
                 
                 currentPlayer.CheckReward(board);
+                
+                currentPlayer.CheckBomb(board);
 
                 
                 if (currentPlayer.Position >= board.boardSize)
