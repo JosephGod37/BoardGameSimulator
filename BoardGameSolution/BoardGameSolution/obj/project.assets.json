@@ -8,19 +8,20 @@
     "net8.0": []
   },
   "packageFolders": {
-    "/home/joseph/.nuget/packages/": {}
+    "C:\\Users\\blazk\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/BoardGameSolution.csproj",
+      "projectUniqueName": "C:\\Users\\blazk\\Desktop\\BoardGameSimulator\\BoardGameSolution\\BoardGameSolution\\BoardGameSolution.csproj",
       "projectName": "BoardGameSolution",
-      "projectPath": "/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/BoardGameSolution.csproj",
-      "packagesPath": "/home/joseph/.nuget/packages/",
-      "outputPath": "/home/joseph/Pulpit/BoardGameSimulator/BoardGameSolution/BoardGameSolution/obj/",
+      "projectPath": "C:\\Users\\blazk\\Desktop\\BoardGameSimulator\\BoardGameSolution\\BoardGameSolution\\BoardGameSolution.csproj",
+      "packagesPath": "C:\\Users\\blazk\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\blazk\\Desktop\\BoardGameSimulator\\BoardGameSolution\\BoardGameSolution\\obj\\",
       "projectStyle": "PackageReference",
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "/home/joseph/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\blazk\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -38,6 +39,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -54,12 +60,30 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.110/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

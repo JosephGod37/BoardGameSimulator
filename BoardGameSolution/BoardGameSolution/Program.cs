@@ -22,30 +22,66 @@ public class Player
     public void Move()
     {
         Random rnd = new Random();
-        int num = rnd.Next(0,7);
+        int num = rnd.Next(1,7);
         Position += num;
-        
+        Console.WriteLine($"{Name} moved to position {Position}");
     }
-    public void DisplayInformation()
+
+    public void updatePoints()
     {
-        Console.WriteLine($"Position: {Position}");
+        Score += Position;
+        Console.WriteLine("Score: {0}", Score);
     }
 }
 
+public class Board
+{
+    public int boardSize;
+    public List<int> generatingRewards;
+    private Random rnd = new Random();
+    public Board()
+    {
+        boardSize = 30;
+        rnd = new Random();
+        generatingRewards = GenerateRandomRewards(12, boardSize);
+    }
+    public Board(int BoardSize)
+    {
+        this.boardSize = BoardSize;
+        rnd = new Random();
+        generatingRewards = GenerateRandomRewards(12, boardSize);
+    }
+    public void ExpandBoard(int newSize, int rewardsCount)
+    {
+        if (newSize <= boardSize)
+        {
+            throw new ArgumentException("New size must be larger than current size.");
+        }
+
+        boardSize = newSize;
+        generatingRewards = GenerateRandomRewards(rewardsCount, boardSize);
+    }
+    private List<int> GenerateRandomRewards(int rewardsCount, int maxPosition)
+    {
+        var rewards = new HashSet<int>(); 
+
+        while (rewards.Count < rewardsCount)
+        {
+            int randomPosition = rnd.Next(1, maxPosition + 1); 
+            rewards.Add(randomPosition);
+        }
+
+        return new List<int>(rewards); 
+    }
+    
+    
+}
 internal class Program
 {
     public static void Main(string[] args)
     {
         var player = new Player();
-        
-        while (player.Position != 10)
-        {
-            player.Move();            
-            player.DisplayInformation(); 
-        }
-        
-        Console.WriteLine("Player reached position 10!");
-        
-        
+        player.Move(); 
+        player.updatePoints();
     }
 }
