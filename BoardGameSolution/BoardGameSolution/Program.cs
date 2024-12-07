@@ -25,12 +25,24 @@ public class Player
         int num = rnd.Next(1,7);
         Position += num;
         Console.WriteLine($"{Name} moved to position {Position}");
+        Score += num;
     }
 
     public void updatePoints()
     {
         Score += Position;
         Console.WriteLine("Score: {0}", Score);
+    }
+
+    public void CheckReward(Board board)
+    {
+        if (board.HasRewardAt(Position))
+        {
+            Score += 2;
+            Console.WriteLine(
+                $"Gracz: {Name} znalazl nagorde na pozycji: {Position}! dostaje plus 2 punkty, Score: {Score}");
+            board.RemoveReward(Position);
+        }
     }
 }
 
@@ -55,7 +67,7 @@ public class Board
     {
         if (newSize <= boardSize)
         {
-            throw new ArgumentException("New size must be larger than current size.");
+            throw new ArgumentException("Nowy rozmiar musi byc wiekszy niz 30 pól");
         }
 
         boardSize = newSize;
@@ -73,15 +85,34 @@ public class Board
 
         return new List<int>(rewards); 
     }
+    public bool HasRewardAt(int position)
+    {
+        return generatingRewards.Contains(position); 
+    }
     
-    
+    public void RemoveReward(int position)
+    {
+        generatingRewards.Remove(position); 
+    }
 }
+
 internal class Program
 {
     public static void Main(string[] args)
     {
-        var player = new Player();
-        player.Move(); 
-        player.updatePoints();
+        var board = new Board();
+        var player = new Player("Alice", 0, 0);
+
+        Console.WriteLine($"Initial rewards: {string.Join(", ", board.generatingRewards)}");
+
+        
+        for (int i = 0; i < 10; i++) 
+        {
+            player.Move();
+            player.CheckReward(board); 
+        }
+
+        Console.WriteLine($"Final Score: {player.Score}");
     }
+    
 }
