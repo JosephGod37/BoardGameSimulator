@@ -10,10 +10,21 @@ public class Warrior: Player, ISetPoints
     {
         if (board.HasRewardAt(Position))
         {
-            Score += 1;
+            Score += 3;
             Console.WriteLine(
-                $"Gracz: {Name} znalazl nagorde na pozycji: {Position}! dostaje plus 2 punkty, Score: {Score}");
+                $"Gracz: {Name} znalazl nagorde na pozycji: {Position}! dostaje plus 3 punkty, Score: {Score}");
             board.RemoveReward(Position);
         }
     }
+
+    public void CheckBomb(Board board)
+    {
+        if (board.HasBombAt(Position))
+        {
+            Score -= 1;
+            Console.WriteLine($"Gracz: {Name} znalazl bombe na pozycji: {Position}! dostaje minus 1 punkty, Score: {Score}");
+            board.RemoveBomb(Position);
+        }
+    }
+    
 }

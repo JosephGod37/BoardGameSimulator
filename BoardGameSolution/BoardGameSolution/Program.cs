@@ -77,7 +77,7 @@ public class Board
     }
 }
 
-public class Game
+    public class Game
 {
     private Board board;
     private List<Player> players;
@@ -89,208 +89,102 @@ public class Game
         Console.WriteLine("Czy chcesz powiększyć mapę? (standardowy rozmiar to 30) t/n");
         string choice = Console.ReadLine();
 
-        if (choice == "n")
+        if (choice.ToLower() == "n")
         {
-            board = new Board(); 
+            board = new Board();
             Console.WriteLine($"Rozmiar mapy to: {board.boardSize}");
         }
         else
         {
             Console.WriteLine("Podaj rozmiar mapy (musi być większa niż 30)");
-            string choice2 = Console.ReadLine();
-
-            int number;
-
-            if (int.TryParse(choice2, out number) && number > 30)
+            if (int.TryParse(Console.ReadLine(), out int newSize) && newSize > 30)
             {
-                board = new Board(number);
+                board = new Board(newSize);
                 Console.WriteLine($"Rozmiar mapy to: {board.boardSize}");
             }
             else
             {
                 Console.WriteLine("Błędny rozmiar mapy! Ustawiono domyślny rozmiar 30.");
-                board = new Board();  
-                Console.WriteLine($"Rozmiar mapy to: {board.boardSize}");
+                board = new Board();
             }
         }
 
-     
-        Console.WriteLine("Podaj liczbę graczy (maksymalnie 2):");
+        
         int playerCount;
-
+        Console.WriteLine("Podaj liczbę graczy (maksymalnie 2):");
         while (!int.TryParse(Console.ReadLine(), out playerCount) || playerCount < 1 || playerCount > 2)
         {
             Console.WriteLine("Niepoprawna liczba graczy. Proszę podać liczbę graczy (1 lub 2):");
         }
 
         players = new List<Player>();
-
-        
         for (int i = 0; i < playerCount; i++)
         {
             Console.WriteLine($"Podaj imię gracza {i + 1}:");
             string playerName = Console.ReadLine();
-            players.Add(new Magician(playerName, 0, 0));  
-        }
 
-        Console.WriteLine($"Rozpoczynasz grę z {playerCount} graczami.");
+            Console.WriteLine($"Wybierz rolę dla gracza {playerName} (magician, healer, warrior):");
+            Player player = null;
 
-        currentPlayerIndex = 0;  
-
-        Console.WriteLine("Wybierz role (magician,healer,warrior");
-        string choice3 = Console.ReadLine();
-        
-        if (choice3 == "magician")
-        {
-            while (true)
+            while (player == null)
             {
-                Player currentPlayer = players[currentPlayerIndex];
-
-           
-                Console.WriteLine($"\nGracz: {currentPlayer.Name}, Pozycja: {currentPlayer.Position}, Wynik: {currentPlayer.Score}");
-
-           
-                Console.WriteLine($"{currentPlayer.Name}, czy chcesz się ruszyć? (t/n)");
-                string moveChoice = Console.ReadLine();
-
-                if (moveChoice.ToLower() == "t")
+                string role = Console.ReadLine().ToLower();
+                player = role switch
                 {
-                
-                    currentPlayer.Move();
-                
-                    ((Magician)currentPlayer).CheckReward(board);
-                
-                    currentPlayer.CheckBomb(board);
+                    "magician" => new Magician(playerName, 0, 0),
+                    "healer" => new Healer(playerName, 0, 0),
+                    "warrior" => new Warrior(playerName, 0, 0),
+                    _ => null
+                };
 
-                
-                    if (currentPlayer.Position >= board.boardSize)
-                    {
-                        EndGame();
-                        return;
-                    }
-                }
-                else
+                if (player == null)
                 {
-                    Console.WriteLine($"{currentPlayer.Name} postanowił pominąć turę.");
+                    Console.WriteLine("Niepoprawna rola. Wybierz magician, healer lub warrior:");
                 }
-
-            
-                currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
             }
+            players.Add(player);
         }
-        else if (choice3 == "warrior")
+
+        Console.WriteLine($"Rozpoczynasz grę z {players.Count} graczami.");
+        PlayGame();
+    }
+
+    private void PlayGame()
+    {
+        currentPlayerIndex = 0;
+        while (true)
         {
-            while (true)
+            Player currentPlayer = players[currentPlayerIndex];
+
+            Console.WriteLine($"\nGracz: {currentPlayer.Name}, Pozycja: {currentPlayer.Position}, Wynik: {currentPlayer.Score}");
+            Console.WriteLine($"{currentPlayer.Name}, czy chcesz się ruszyć? (t/n)");
+            string moveChoice = Console.ReadLine();
+
+            if (moveChoice.ToLower() == "t")
             {
-                Player currentPlayer = players[currentPlayerIndex];
+                currentPlayer.Move();
 
-           
-                Console.WriteLine($"\nGracz: {currentPlayer.Name}, Pozycja: {currentPlayer.Position}, Wynik: {currentPlayer.Score}");
-
-           
-                Console.WriteLine($"{currentPlayer.Name}, czy chcesz się ruszyć? (t/n)");
-                string moveChoice = Console.ReadLine();
-
-                if (moveChoice.ToLower() == "t")
+               
+                if (currentPlayer is ISetPoints pointsPlayer)
                 {
-                
-                    currentPlayer.Move();
-                
-                    ((Warrior)currentPlayer).CheckReward(board);
-                
-                    currentPlayer.CheckBomb(board);
-
-                
-                    if (currentPlayer.Position >= board.boardSize)
-                    {
-                        EndGame();
-                        return;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{currentPlayer.Name} postanowił pominąć turę.");
+                    pointsPlayer.CheckReward(board);
+                    pointsPlayer.CheckBomb(board);
                 }
 
-            
-                currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+                
+                if (currentPlayer.Position >= board.boardSize)
+                {
+                    EndGame();
+                    return;
+                }
             }
-            
-        }
-        else if (choice3 == "warrior")
-        {
-            while (true)
+            else
             {
-                Player currentPlayer = players[currentPlayerIndex];
-
-
-                Console.WriteLine(
-                    $"\nGracz: {currentPlayer.Name}, Pozycja: {currentPlayer.Position}, Wynik: {currentPlayer.Score}");
-
-
-                Console.WriteLine($"{currentPlayer.Name}, czy chcesz się ruszyć? (t/n)");
-                string moveChoice = Console.ReadLine();
-
-                if (moveChoice.ToLower() == "t")
-                {
-
-                    currentPlayer.Move();
-
-                    ((Warrior)currentPlayer).CheckReward(board);
-
-                    currentPlayer.CheckBomb(board);
-
-
-                    if (currentPlayer.Position >= board.boardSize)
-                    {
-                        EndGame();
-                        return;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{currentPlayer.Name} postanowił pominąć turę.");
-                }
-
-
-                currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+                Console.WriteLine($"{currentPlayer.Name} postanowił pominąć turę.");
             }
+
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;  
         }
-        // while (true)
-        // {
-        //     Player currentPlayer = players[currentPlayerIndex];
-        //
-        //    
-        //     Console.WriteLine($"\nGracz: {currentPlayer.Name}, Pozycja: {currentPlayer.Position}, Wynik: {currentPlayer.Score}");
-        //
-        //    
-        //     Console.WriteLine($"{currentPlayer.Name}, czy chcesz się ruszyć? (t/n)");
-        //     string moveChoice = Console.ReadLine();
-        //
-        //     if (moveChoice.ToLower() == "t")
-        //     {
-        //         
-        //         currentPlayer.Move();
-        //         
-        //         ((Magician)currentPlayer).CheckReward(board);
-        //         
-        //         currentPlayer.CheckBomb(board);
-        //
-        //         
-        //         if (currentPlayer.Position >= board.boardSize)
-        //         {
-        //             EndGame();
-        //             return;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine($"{currentPlayer.Name} postanowił pominąć turę.");
-        //     }
-        //
-        //     
-        //     currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
-        // }
     }
 
     private void EndGame()

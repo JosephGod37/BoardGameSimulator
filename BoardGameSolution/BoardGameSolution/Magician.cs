@@ -12,8 +12,18 @@ public class Magician: Player, ISetPoints
         {
             Score += 3;
             Console.WriteLine(
-                $"Gracz: {Name} znalazl nagorde na pozycji: {Position}! dostaje plus 2 punkty, Score: {Score}");
+                $"Gracz: {Name} znalazl nagorde na pozycji: {Position}! dostaje plus 3 punkty, Score: {Score}");
             board.RemoveReward(Position);
         }
+    } 
+    public void CheckBomb(Board board)
+    {
+        if (board.HasBombAt(Position))
+        {
+            Score -= 2;
+            Console.WriteLine($"Gracz: {Name} znalazl bombe na pozycji: {Position}! dostaje minus 2 punkty, Score: {Score}");
+            board.RemoveBomb(Position);
+        }
     }
+    
 }
