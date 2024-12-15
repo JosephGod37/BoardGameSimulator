@@ -132,7 +132,7 @@ public class Board
 
 public class Game
 {
-     private Board board;
+    private Board board;
     private List<Player> players;
     private int currentPlayerIndex;
 
